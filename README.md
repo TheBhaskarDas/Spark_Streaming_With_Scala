@@ -1,1 +1,1 @@
-# Spark_Streaming_With_Scala
+# Spark_Streaming_Kafka_With_Scala
