@@ -27,9 +27,9 @@ object StreamingWC extends Serializable {
     // linesDF.printSchema()
 
     //val wordsDF = linesDF.select(explode(split(col("value"), " ")).alias("word"))
-    val wordsDF = linesDF.select(expr("explode(split(value,' ')) as word"))
+    val wordsDF = linesDF.select(expr("explode(split(value,' ')) as word")) //The Whole things are an expression so we must enclose inside expr.
     val countsDF = wordsDF.groupBy("word").count()
-
+    //Explode Function Transforms Array of Words into Rows. So Here My Texts(Which are coming through TCP/IP call) are broken into Words and Exploded into Rows.
 
     val wordCountQuery = countsDF.writeStream
       .format("console")

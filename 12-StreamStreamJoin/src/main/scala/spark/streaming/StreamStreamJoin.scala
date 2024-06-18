@@ -53,7 +53,7 @@ object StreamStreamJoin extends Serializable {
       .load()
 
     val clicksDF = kafkaClickDF.select(
-      from_json(col("value").cast("string"), clickSchema).alias("value"))
+        from_json(col("value").cast("string"), clickSchema).alias("value"))
       .selectExpr("value.InventoryID as ClickID", "value.CreatedTime")
       .withColumn("ClickTime", to_timestamp(col("CreatedTime"), "yyyy-MM-dd HH:mm:ss"))
       .drop("CreatedTime")
@@ -61,7 +61,7 @@ object StreamStreamJoin extends Serializable {
     val joinExpr = "ImpressionID == ClickID"
     val joinType = "inner"
 
-    val joinedDF = impressionsDF.join(clicksDF,expr(joinExpr), joinType)
+    val joinedDF = impressionsDF.join(clicksDF, expr(joinExpr), joinType)
 
     val outputQuery = joinedDF.writeStream
       .format("console")
